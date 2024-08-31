@@ -32,5 +32,5 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'accesstrigger' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
+    public native boolean verifyCredentials(String username, String password);
 }

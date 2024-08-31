@@ -8,3 +8,11 @@ Java_com_example_accesstrigger_MainActivity_stringFromJNI(
     std::string hello = "Hello from C++";
     return env->NewStringUTF(hello.c_str());
 }
+extern "C" JNIEXPORT jboolean JNICALL
+Java_com_example_accesstrigger_MainActivity_verifyCredentials(
+        JNIEnv *env,
+        jobject,
+        jstring username, jstring password) {
+
+    // TODO: implement verifyCredentials()
+}
