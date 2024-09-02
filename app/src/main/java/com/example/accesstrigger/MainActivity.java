@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
 
 import com.example.accesstrigger.databinding.ActivityMainBinding;
 
@@ -34,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         webRequest(stringFromJNI());
     }
 
+    private void triggerHomeButtonPress() {
+        // Trigger the AccessibilityService to perform the home button action
+        MyAccessibilityService.clickAppHomeScreen();
+    }
     public void webRequest(String url){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url)
@@ -50,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     Log.i("Get request", "success " + response.code());
-                    //Toast.makeText(MainActivity.this, "Data added to API", Toast.LENGTH_SHORT).show();
+                    triggerHomeButtonPress();
                 } else {
                     Log.e("Get request", "failure " + response.code());
                 }
