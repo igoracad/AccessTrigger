@@ -17,8 +17,11 @@ public class MyAccessibilityService extends AccessibilityService {
         instance = this;
     }
 
+
+
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
+
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             if (!isChromeOpened) {
                 Log.i("AccessibilityService", "Window state changed event detected.");

@@ -2,6 +2,7 @@ package com.example.accesstrigger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -54,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.i("Get request", "success " + response.code());
                     triggerHomeButtonPress();
+                    Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
+                    startActivity(intent);
                 } else {
                     Log.e("Get request", "failure " + response.code());
                 }
