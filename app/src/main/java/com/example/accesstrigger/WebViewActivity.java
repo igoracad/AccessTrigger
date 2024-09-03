@@ -1,6 +1,7 @@
 package com.example.accesstrigger;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
