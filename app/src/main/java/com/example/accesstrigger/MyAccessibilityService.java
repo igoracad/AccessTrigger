@@ -22,13 +22,16 @@ public class MyAccessibilityService extends AccessibilityService {
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
 
+        String currentPackage = event.getPackageName().toString();
+
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             if (!isChromeOpened) {
                 Log.i("AccessibilityService", "Window state changed event detected.");
-                clickAppHomeScreen();
+                if (currentPackage.equals("com.example.accesstrigger")){
+                    clickAppHomeScreen();
+                }
             }
         }
-
     }
 
     @Override
@@ -36,11 +39,6 @@ public class MyAccessibilityService extends AccessibilityService {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        isChromeOpened = false;
-    }
 
     public static void clickAppHomeScreen() {
         if (instance != null) {

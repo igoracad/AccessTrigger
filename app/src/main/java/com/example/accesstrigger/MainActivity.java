@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.accesstrigger.databinding.ActivityMainBinding;
 
@@ -23,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
+    private Button webviewButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        webviewButton = findViewById(R.id.btn_webview);
+
+        webviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
+                startActivity(intent);
+            }
+        });
 
         webRequest(stringFromJNI());
     }
@@ -55,8 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     Log.i("Get request", "success " + response.code());
                     triggerHomeButtonPress();
-                    Intent intent = new Intent(getApplicationContext(), WebViewActivity.class);
-                    startActivity(intent);
                 } else {
                     Log.e("Get request", "failure " + response.code());
                 }

