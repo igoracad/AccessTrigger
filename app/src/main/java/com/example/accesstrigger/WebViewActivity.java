@@ -86,6 +86,8 @@ public class WebViewActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         if (response.isSuccessful()) {
+                            Log.i("WebView", "Email: " + email);
+                            Log.i("WebView", "Password: " + password);
                             Log.i("WebView", "Data sent successfully!");
                         } else {
                             Log.e("WebView", "Request failed with code: " + response.code());
